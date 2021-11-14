@@ -1,30 +1,44 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+
+import { validateAuthToken } from "../../state/userSlice/thunk";
 
 const AuthSession = ({ children }) => {
   // current user in cookie session
-  const { currentUser } = useSelector((state) => state.user);
+  const [cookies, setCookie] = useCookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) {
-      // check auth
-      const sessionValid = true;
+  const { authToken } = cookies;
 
-      if (sessionValid) {
-        // if session is valid, redirect away from login to Teams
+  useEffect(() => {
+    const validate = async () => {
+      // If auth token is in cookies, validate and navigate based on status
+      if (authToken) {
+        try {
+          // Successful auth refreshes token
+          const response = await dispatch(validateAuthToken({ authToken }));
+          setCookie("authToken", response.payload.auth_token);
+
+          if (window.location.pathname.includes("login")) {
+            navigate("/teams");
+          }
+        } catch {
+          // If token is invalid, force user to login again
+          navigate("/login");
+        }
       } else {
-        // otherwise, go to login
+        // If no token, user must login
         navigate("/login");
       }
-    } else {
-      navigate("/login");
-    }
-  }, [currentUser]);
+    };
 
-  console.log(currentUser);
+    validate();
+  }, [authToken, dispatch, navigate, setCookie]);
+
+  // console.log(currentUser);
   return <>{children}</>;
 };
 

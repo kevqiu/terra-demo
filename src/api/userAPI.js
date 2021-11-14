@@ -1,4 +1,16 @@
-import { ROUTES } from "../constants";
+import { BASE_URL, Routes } from "../constants";
+
+const login = async (username, password) => {
+  const options = {
+    method: "POST",
+    body: {
+      username,
+      password,
+    },
+  };
+
+  return fetch(`${BASE_URL}/${Routes.LOGIN}`, options);
+};
 
 const validateAuthToken = async (authToken) => {
   const options = {
@@ -8,10 +20,11 @@ const validateAuthToken = async (authToken) => {
     },
   };
 
-  return fetch(`/${ROUTES.AUTH}`, options);
+  return fetch(`${BASE_URL}/${Routes.AUTH}`, options);
 };
 
 const userAPI = {
+  login,
   validateAuthToken,
 };
 

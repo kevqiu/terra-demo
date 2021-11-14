@@ -1,15 +1,23 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+
+import { login } from "../../state/userSlice/thunk";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [_, setCookie] = useCookies();
 
-  const onSubmit = (values, { setSubmitting }) => {
-    console.log(values);
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+  const onSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await dispatch(login(values));
+      setCookie("authToken", response.payload.auth_token);
+      navigate("/teams");
+    } catch (error) {}
+
+    setSubmitting(false);
   };
 
   return (

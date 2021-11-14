@@ -5,8 +5,10 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/login");
+    navigate("/teams");
   });
+
+  return null;
 };
 
 export default HomePage;

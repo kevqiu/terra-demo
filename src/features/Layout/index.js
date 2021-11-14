@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { logout } from "../../state/userSlice";
 
 const Layout = ({ children }) => {
   const [checked, setChecked] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const [_, __, removeCookie] = useCookies();
+
   const dispatch = useDispatch();
 
   const showMenu = !!currentUser;
@@ -54,7 +59,7 @@ const Layout = ({ children }) => {
             <div class="flex-none hidden lg:block">
               <ul class="menu horizontal">
                 <li>
-                  <a href="/teamjudging" class="rounded-btn">
+                  <Link to="/teamjudging" class="rounded-btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-6 w-6"
@@ -70,10 +75,10 @@ const Layout = ({ children }) => {
                       />
                     </svg>
                     <span class="ml-2 font-bold">JUDGE</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/teams" class="rounded-btn">
+                  <Link to="/teams" class="rounded-btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5"
@@ -83,7 +88,7 @@ const Layout = ({ children }) => {
                       <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                     </svg>
                     <span class="ml-2 font-bold">TEAMS</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -102,7 +107,7 @@ const Layout = ({ children }) => {
         ></label>
         <ul class="p-4 overflow-y-auto menu w-80 bg-base-100">
           <li onClick={() => setChecked(false)}>
-            <a href="/teamjudging" class="drawer-button">
+            <Link to="/teamjudging" class="drawer-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 mr-4 text-primary"
@@ -118,10 +123,10 @@ const Layout = ({ children }) => {
                 />
               </svg>
               <span class="font-semibold">Team Judging</span>
-            </a>
+            </Link>
           </li>
           <li onClick={() => setChecked(false)}>
-            <a href="/teams">
+            <Link to="/teams">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 mr-4 text-primary"
@@ -131,15 +136,16 @@ const Layout = ({ children }) => {
                 <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
               </svg>
               <span class="font-semibold">Teams List</span>
-            </a>
+            </Link>
           </li>
           <li
             onClick={() => {
               setChecked(false);
+              removeCookie("authToken");
               dispatch(logout());
             }}
           >
-            <a href="/teams">
+            <Link to="/teams">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 mr-4 text-primary"
@@ -155,7 +161,7 @@ const Layout = ({ children }) => {
                 />
               </svg>
               <span class="font-semibold">Logout</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
