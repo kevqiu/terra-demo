@@ -7,8 +7,6 @@ const HomePage = () => {
   useEffect(() => {
     navigate("/login");
   });
-
-  return null;
 };
 
 export default HomePage;

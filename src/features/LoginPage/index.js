@@ -1,59 +1,87 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
 
+  const onSubmit = (values, { setSubmitting }) => {
+    console.log(values);
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+  };
+
   return (
-    <div class="flex-auto justify-center">
-      <Formik
-        initialValues={{ username: "", password: "" }}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form class="w-1/2">
-            <h1>Login</h1>
+    <Formik
+      initialValues={{ username: "", password: "" }}
+      onSubmit={onSubmit}
+      validate={(values) => {
+        const errors = {};
+        if (!values.username) errors.username = "Username is required";
+        if (!values.password) errors.password = "Password is required";
+        return errors;
+      }}
+    >
+      {({ isSubmitting, errors, touched }) => {
+        const inputClass = (field) => {
+          if (errors[field] && touched[field]) return "input-error";
+          return "input-primary";
+        };
 
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Username</span>
-              </label>
-              <Field
-                name="username"
-                class="input input-bordered input-primary"
-              />
-            </div>
+        return (
+          <Form>
+            <div class="flex justify-center">
+              <div class="w-1/2">
+                <h1 class="text-center text-3xl font-semibold text-primary">
+                  LOGIN
+                </h1>
 
-            <div class="form-control mt-2">
-              <label class="label">
-                <span class="label-text">Password</span>
-              </label>
-              <Field
-                type="password"
-                name="password"
-                class="input input-bordered input-primary"
-              />
-            </div>
+                <p class="mt-8 mb-6">
+                  Welcome to the PYRS Judging App! Please login to get started.
+                </p>
+                <div class="form-control">
+                  <label class="label">
+                    <span class="label-text">Username</span>
+                  </label>
+                  <Field
+                    name="username"
+                    class={`input input-bordered ${inputClass("username")}`}
+                  />
+                </div>
+                <ErrorMessage name="username">
+                  {(msg) => <p class="text-xs text-error mt-2 ml-1">{msg}</p>}
+                </ErrorMessage>
 
-            <div class="mt-6">
-              <button
-                class="btn btn-wide"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Submit
-              </button>
+                <div class="form-control mt-2">
+                  <label class="label">
+                    <span class="label-text">Password</span>
+                  </label>
+                  <Field
+                    type="password"
+                    name="password"
+                    class={`input input-bordered ${inputClass("password")}`}
+                  />
+                </div>
+                <ErrorMessage name="password">
+                  {(msg) => <p class="text-xs text-error mt-2 ml-1">{msg}</p>}
+                </ErrorMessage>
+
+                <div class="flex justify-center mt-8">
+                  <button
+                    class="btn btn-primary btn-wide"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
           </Form>
-        )}
-      </Formik>
-    </div>
+        );
+      }}
+    </Formik>
   );
 };
 
