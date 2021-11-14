@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>PYRS Judging App</p>
-        <Link to="/teamjudging">Team Judging</Link>
-      </header>
-    </div>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/login");
+  });
+
+  return null;
 };
 
 export default HomePage;

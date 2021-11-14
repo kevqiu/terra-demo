@@ -2,7 +2,7 @@ const TeamsListPage = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Teams List Page</p>
+        <p>Teams Page</p>
       </header>
     </div>
   );
