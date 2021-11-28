@@ -11,9 +11,9 @@ import HomePage from "./features/HomePage";
 import LoginPage from "./features/LoginPage";
 import TeamPage from "./features/TeamPage";
 import TeamsListPage from "./features/TeamsListPage";
-import TeamJudgingPage from "./features/TeamJudgingPage";
+import ScorePage from "./features/ScorePage";
 
-import store from "./store";
+import store from "./state/store";
 
 import makeServer from "./mirage";
 
@@ -31,7 +31,8 @@ ReactDOM.render(
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/teams" element={<TeamsListPage />} />
                 <Route path="/team/:teamId" element={<TeamPage />} />
-                <Route path="/teamjudging" element={<TeamJudgingPage />} />
+                <Route path="/score" element={<ScorePage />} />
+                <Route path="*" element={<HomePage />} />
               </Routes>
             </Layout>
           </AuthSession>

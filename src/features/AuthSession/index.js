@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { setUser } from "../../state/userSlice";
 
-import { validateAuthToken } from "../../state/userSlice/thunk";
+// import { validateAuthToken } from "../../state/userSlice/thunk";
 
 const AuthSession = ({ children }) => {
   // current user in cookie session
@@ -11,16 +12,17 @@ const AuthSession = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { authToken } = cookies;
+  const { user } = cookies;
 
   useEffect(() => {
     const validate = async () => {
       // If auth token is in cookies, validate and navigate based on status
-      if (authToken) {
+      if (user) {
         try {
           // Successful auth refreshes token
-          const response = await dispatch(validateAuthToken({ authToken }));
-          setCookie("authToken", response.payload.auth_token);
+          // const response = await dispatch(validateAuthToken({ authToken }));
+          dispatch(setUser(user));
+          setCookie("user", user);
 
           if (window.location.pathname.includes("login")) {
             navigate("/teams");
@@ -36,9 +38,8 @@ const AuthSession = ({ children }) => {
     };
 
     validate();
-  }, [authToken, dispatch, navigate, setCookie]);
+  }, [user, dispatch, navigate, setCookie]);
 
-  // console.log(currentUser);
   return <>{children}</>;
 };
 
