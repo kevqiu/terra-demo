@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         {/* Navbar */}
         <div className="w-full navbar bg-base-100 shadow">
           {showMenu && (
-            <div className="flex-none lg:hidden">
+            <div className="flex-none ">
               <label
                 htmlFor="drawer"
                 className="btn btn-square btn-ghost"
@@ -61,7 +61,7 @@ const Layout = ({ children }) => {
             <div className="flex-none hidden lg:block">
               <ul className="menu horizontal">
                 <li>
-                  <Link to="/teamjudging" className="rounded-btn">
+                  <Link to="/score" className="rounded-btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -76,7 +76,7 @@ const Layout = ({ children }) => {
                         d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
                       />
                     </svg>
-                    <span className="ml-2 font-bold">JUDGE</span>
+                    <span className="ml-2 font-bold">SCORE</span>
                   </Link>
                 </li>
                 <li>
@@ -138,6 +138,25 @@ const Layout = ({ children }) => {
                 />
               </svg>
               <span className="font-semibold">Score a Team</span>
+            </Link>
+          </li>
+          <li onClick={() => setChecked(false)}>
+            <Link to="/print">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6  mr-4 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                />
+              </svg>
+              <span className="font-semibold">Print Results</span>
             </Link>
           </li>
           <li

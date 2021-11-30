@@ -12,6 +12,7 @@ import LoginPage from "./features/LoginPage";
 import TeamPage from "./features/TeamPage";
 import TeamsListPage from "./features/TeamsListPage";
 import ScorePage from "./features/ScorePage";
+import PrintPage from "./features/PrintPage";
 
 import store from "./state/store";
 
@@ -32,6 +33,7 @@ ReactDOM.render(
                 <Route path="/teams" element={<TeamsListPage />} />
                 <Route path="/teams/:teamId" element={<TeamPage />} />
                 <Route path="/score" element={<ScorePage />} />
+                <Route path="/print" element={<PrintPage />} />
                 {/* <Route path="*" element={<HomePage />} /> */}
               </Routes>
             </Layout>

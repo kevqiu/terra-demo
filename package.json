@@ -19,6 +19,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "6",
     "react-scripts": "4.0.3",
+    "react-to-print": "^2.14.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "scripts": {
