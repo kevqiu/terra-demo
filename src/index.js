@@ -30,9 +30,9 @@ ReactDOM.render(
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/teams" element={<TeamsListPage />} />
-                <Route path="/team/:teamId" element={<TeamPage />} />
+                <Route path="/teams/:teamId" element={<TeamPage />} />
                 <Route path="/score" element={<ScorePage />} />
-                <Route path="*" element={<HomePage />} />
+                {/* <Route path="*" element={<HomePage />} /> */}
               </Routes>
             </Layout>
           </AuthSession>

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getTeams, submitTeamScore } from "./thunk";
+import { getTeamByNumber, getTeams } from "./thunk";
 
 const initialState = {
-  teams: [],
+  allTeams: [],
+  byNumber: {},
 };
 
 export const teamsSlice = createSlice({
@@ -12,7 +13,15 @@ export const teamsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTeams.fulfilled, (state, action) => {
-      state.teams = action.payload.teams;
+      const teams = action.payload.teams;
+      state.allTeams = teams.map((t) => t.number);
+      state.byNumber = Object.assign(...teams.map((t) => ({ [t.number]: t })));
+    });
+    builder.addCase(getTeamByNumber.fulfilled, (state, action) => {
+      const team = action.payload;
+      if (!state.allTeams.includes(team.number))
+        state.allTeams.push(team.number);
+      state.byNumber[team.number] = team;
     });
   },
 });

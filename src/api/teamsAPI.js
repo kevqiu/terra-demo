@@ -4,6 +4,10 @@ const getTeams = async () => {
   return fetch(`${BASE_URL}/${Routes.TEAMS}`);
 };
 
+const getTeamByNumber = async (teamNumber) => {
+  return fetch(`${BASE_URL}/${Routes.TEAMS}/${teamNumber}`);
+};
+
 const submitTeamScore = async ({ team, score, comment, username }) => {
   const options = {
     method: "POST",
@@ -19,6 +23,7 @@ const submitTeamScore = async ({ team, score, comment, username }) => {
 };
 
 const teamsAPI = {
+  getTeamByNumber,
   getTeams,
   submitTeamScore,
 };

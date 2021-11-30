@@ -1,4 +1,5 @@
 import { createServer } from "miragejs";
+import { teamsFixture } from "./fixtures";
 
 const makeServer = ({ environment }) => {
   return createServer({
@@ -18,42 +19,12 @@ const makeServer = ({ environment }) => {
       }));
 
       this.get("/teams", () => ({
-        teams: [
-          {
-            number: "1010A",
-            name: "Ten Ton Robotics",
-            score: 50,
-            rank: 1,
-            record: "6-0-0",
-            wp: 10,
-            sp: 50,
-            skills: 1,
-            skillsScore: 300,
-          },
-          {
-            number: "1010B",
-            name: "Ten Ton Robotics",
-            score: 49,
-            rank: 2,
-            record: "5-1-0",
-            wp: 9,
-            sp: 50,
-            skills: 2,
-            skillsScore: 290,
-          },
-          {
-            number: "1010X",
-            name: "Ten Ton Robotics",
-            score: 45,
-            rank: 3,
-            record: "4-2-0",
-            wp: 7,
-            sp: 50,
-            skills: 3,
-            skillsScore: 280,
-          },
-        ],
+        teams: teamsFixture,
       }));
+
+      this.get("/teams/:number", (_, request) =>
+        teamsFixture.find((t) => t.number === request.params.number)
+      );
 
       this.post("/teams", () => ({
         result: 200,

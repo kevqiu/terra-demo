@@ -5,3 +5,7 @@
 .btn {
 	@apply text-white
 }
+
+.table th:first-child {
+	position: relative
+}

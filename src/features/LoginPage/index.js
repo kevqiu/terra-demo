@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const LoginPage = () => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [_, setCookie] = useCookies();
+  const [, setCookie] = useCookies();
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
@@ -39,45 +39,49 @@ const LoginPage = () => {
 
         return (
           <Form>
-            <div class="flex flex-col m-auto container">
-              <h1 class="text-center text-3xl font-semibold text-primary">
+            <div className="flex flex-col m-auto container">
+              <h1 className="text-center text-3xl font-semibold text-primary">
                 LOGIN
               </h1>
 
-              <p class="mt-8 mb-6 text-center">
+              <p className="mt-8 mb-6 text-center">
                 Welcome to the PYRS Judging App! Please login to get started.
               </p>
-              <div class="flex flex-col w-2/3 sm:w-1/2 m-auto">
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Username</span>
+              <div className="flex flex-col w-2/3 sm:w-1/2 m-auto">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Username</span>
                   </label>
                   <Field
                     name="username"
-                    class={`input input-bordered ${inputClass("username")} `}
+                    className={`input input-bordered ${inputClass(
+                      "username"
+                    )} `}
                   />
                 </div>
                 <ErrorMessage name="username">
-                  {(msg) => <p class="text-xs text-error mt-2 ml-1">{msg}</p>}
+                  {(msg) => (
+                    <p className="text-xs text-error mt-2 ml-1">{msg}</p>
+                  )}
                 </ErrorMessage>
 
-                {/* <div class="form-control mt-2">
-                  <label class="label">
-                    <span class="label-text">Password</span>
+                {/* <div className="form-control mt-2">
+                  <label className="label">
+                    <span className="label-text">Password</span>
                   </label>
                   <Field
                     type="password"
                     name="password"
-                    class={`input input-bordered ${inputClass("password")}`}
+                    className={`input input-bordered ${inputClass("password")}`}
                   />
                 </div>
                 <ErrorMessage name="password">
-                  {(msg) => <p class="text-xs text-error mt-2 ml-1">{msg}</p>}
+                  {(msg) => <p className="text-xs text-error mt-2 ml-1">{msg}</p>}
                 </ErrorMessage> */}
 
-                <div class="flex justify-end mt-8">
+                <div className="flex justify-end mt-8">
                   <button
-                    class="btn btn-primary"
+                    className="btn btn-primary"
                     type="submit"
                     disabled={isSubmitting}
                   >

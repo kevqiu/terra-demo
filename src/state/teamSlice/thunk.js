@@ -2,6 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import teamsAPI from "../../api/teamsAPI";
 
+export const getTeamByNumber = createAsyncThunk(
+  "teams/getTeamByNumber",
+  async (teamNumber) => {
+    const response = await teamsAPI.getTeamByNumber(teamNumber);
+    return response.json();
+  }
+);
+
 export const getTeams = createAsyncThunk("teams/getTeams", async () => {
   const response = await teamsAPI.getTeams();
   return response.json();
