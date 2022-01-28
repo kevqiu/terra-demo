@@ -5,10 +5,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTeams, submitTeamScore } from "../../state/teamSlice/thunk";
 import { getInputClasses } from "../../util/input";
 
+import "./style.css";
+
+const NumberPicker = ({ onChange, size, selected }) => (
+  <input
+    type="range"
+    className="range range-primary"
+    max={size}
+    value={selected}
+    onChange={(e) => onChange(e.target.value)}
+  />
+  // In case we ever want to go back to buttons
+  // <div className="btn-group">
+  //   {Array(size)
+  //     .fill()
+  //     .map((x, i) => (
+  //       <button
+  //         className={`btn btn-primary btn-sm ${
+  //           selected !== i && "btn-outline"
+  //         } btn-number-picker`}
+  //         onClick={() => onClick(i)}
+  //         key={i}
+  //         type="button"
+  //       >
+  //         {i}
+  //       </button>
+  //     ))}
+  // </div>
+);
+
 const ScorePage = () => {
   const dispatch = useDispatch();
   const { allTeams } = useSelector((state) => state.teams);
   const { currentUser } = useSelector((state) => state.user);
+
+  const teamState = useState(-1);
+  const designState = useState(-1);
+  const amazeState = useState(-1);
+  const buildState = useState(-1);
+  const createState = useState(-1);
+  const thinkState = useState(-1);
+  const numberPickers = [
+    { key: "team", state: teamState },
+    { key: "design", state: designState },
+    { key: "amaze", state: amazeState },
+    { key: "build", state: buildState },
+    { key: "create", state: createState },
+    { key: "think", state: thinkState },
+  ];
+
   const [showSaved, setShowSaved] = useState(false);
 
   useEffect(() => {
@@ -20,12 +65,20 @@ const ScorePage = () => {
       await dispatch(
         submitTeamScore({
           team: values.team,
-          score: values.score,
+          teamScore: Number(values.teamScore),
+          designScore: Number(values.designScore),
+          amazeScore: Number(values.amazeScore),
+          buildScore: Number(values.buildScore),
+          createScore: Number(values.createScore),
+          thinkScore: Number(values.thinkScore),
+          intendedAutoScore: Number(values.intendedAutoScore),
           comment: values.comment,
           username: currentUser,
         })
       );
       setShowSaved(true);
+
+      numberPickers.forEach((np) => np.state[1](-1));
       resetForm();
     } catch (error) {}
 
@@ -36,7 +89,12 @@ const ScorePage = () => {
     <Formik
       initialValues={{
         team: "",
-        score: "",
+        teamScore: -1,
+        designScore: -1,
+        amazeScore: -1,
+        buildScore: -1,
+        createScore: -1,
+        thinkScore: -1,
         intendedAutoScore: "",
         comment: "",
       }}
@@ -47,16 +105,27 @@ const ScorePage = () => {
 
         const errors = {};
         if (!values.team) errors.team = "Team is required";
-        if (!values.score) errors.score = "Score is required";
+
+        for (let { key } of numberPickers) {
+          if (values[`${key}Score`] < 0) {
+            const keyProper =
+              key.slice(0, 1).toUpperCase() + key.slice(1).toLowerCase();
+            errors[`${key}Score`] = `${keyProper} score is required`;
+          }
+        }
         return errors;
       }}
     >
-      {({ isSubmitting, errors, touched, values }) => {
-        const { team: teamClass, score: scoreClass } = getInputClasses(
-          values,
-          errors,
-          touched
-        );
+      {({ isSubmitting, errors, touched, values, setFieldValue }) => {
+        const { team: teamClass } = getInputClasses(values, errors, touched);
+
+        const numberPickerOnClick = (field, setScore) => {
+          return (v) => {
+            setScore(v);
+            setFieldValue(field, v);
+          };
+        };
+
         return (
           <Form>
             <div className="flex flex-col m-auto container">
@@ -85,21 +154,34 @@ const ScorePage = () => {
                   )}
                 </ErrorMessage>
 
-                <div className="form-control mt-4">
-                  <label className="label">
-                    <span className="label-text">Total Score</span>
-                  </label>
-                  <Field
-                    name="score"
-                    className={`input input-bordered input-${scoreClass}`}
-                    type="number"
-                  />
-                </div>
-                <ErrorMessage name="score">
-                  {(msg) => (
-                    <p className="text-xs text-error mt-2 ml-1">{msg}</p>
-                  )}
-                </ErrorMessage>
+                {numberPickers.map(({ key, state: [value, setValue] }) => (
+                  <>
+                    <div className="form-control mt-4">
+                      <label className="label">
+                        <span className="label-text capitalize">
+                          {key} Score{value > -1 && ":"}{" "}
+                          {value > -1 && <b>{value}</b>}
+                        </span>
+                      </label>
+                      <div className="flex flex-col m-auto w-full">
+                        <NumberPicker
+                          key={key}
+                          size={key === "team" ? 5 : 10}
+                          onChange={numberPickerOnClick(
+                            `${key}Score`,
+                            setValue
+                          )}
+                          selected={value}
+                        />
+                      </div>
+                    </div>
+                    <ErrorMessage name={`${key}Score`}>
+                      {(msg) => (
+                        <p className="text-xs text-error mt-2 ml-1">{msg}</p>
+                      )}
+                    </ErrorMessage>
+                  </>
+                ))}
 
                 <div className="form-control mt-4">
                   <label className="label">

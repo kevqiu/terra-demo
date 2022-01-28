@@ -108,6 +108,9 @@ const Layout = ({ children }) => {
           onClick={() => setChecked(false)}
         ></label>
         <ul className="p-4 overflow-y-auto menu w-80 bg-base-100">
+          <p className="pl-4 py-4">
+            Hi, <span className="font-semibold">{currentUser}</span>!
+          </p>
           <li onClick={() => setChecked(false)}>
             <Link to="/teams">
               <svg

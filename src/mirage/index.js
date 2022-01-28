@@ -26,7 +26,7 @@ const makeServer = ({ environment }) => {
         teamsFixture.find((t) => t.number === request.params.number)
       );
 
-      this.post("/teams", () => ({
+      this.post("/teams/:team/score", () => ({
         result: 200,
       }));
     },
