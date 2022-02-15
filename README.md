@@ -1,4 +1,4 @@
-# Judging Web Front End
+# Terra Demo Front End
 
 ## Pre-requisites
 - [Node (LTS)](https://nodejs.org/en/)

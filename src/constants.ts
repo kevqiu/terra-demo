@@ -1,0 +1,1 @@
+export const MICRO = 100000;
