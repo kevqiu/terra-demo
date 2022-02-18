@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MICRO } from "../../constants";
 import { getLunaPrice } from "../../terra/api";
-import { coinToString, formatCoinToString } from "../../utils/coin";
+import { coinToString } from "../../utils/coin";
 
 import Card from "../Card";
 

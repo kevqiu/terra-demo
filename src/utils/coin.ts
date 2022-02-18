@@ -13,10 +13,6 @@ export const coinToString = (coin: Coin): string => {
   let amount;
   let denomString;
 
-  const denom = coin.denom;
-
-  console.log(coin.toData())
-
   if (coin.denom === "uusd") {
     amount = decCoin.amount.div(MICRO).toDecimalPlaces(4).toString()
     denomString = "UST"
