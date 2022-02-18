@@ -6,7 +6,7 @@ const initialState = {
   currentUser: null,
 };
 
-export const userSlice = createSlice({
+export const walletSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -27,6 +27,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout, setUser } = userSlice.actions;
+export const { logout, setUser } = walletSlice.actions;
 
-export default userSlice.reducer;
+export default walletSlice.reducer;

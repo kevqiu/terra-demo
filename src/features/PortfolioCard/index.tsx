@@ -3,26 +3,35 @@ import { getWalletData } from "../../terra/api";
 import { coinToString } from "../../utils/coin";
 import Card from "../Card";
 
-const PortfolioCard = () => {
+const PortfolioCard = ({ walletAddress }: Props) => {
   const [bank, setBank] = useState([] as string[]);
+  const [error, setError] = useState("" as string);
 
   useEffect(() => {
     const getBank = async () => {
-      const coins = await getWalletData(
-        "terra1allgm586eztgmry763wsh3nqcna5jadrtztfnh"
-      );
-
-      const formattedCoins = coins.map((c) => coinToString(c));
-      setBank(formattedCoins);
+      try {
+        const coins = await getWalletData(walletAddress);
+        const formattedCoins = coins.map((c) => coinToString(c));
+        setBank(formattedCoins);
+        setError("");
+      } catch (e) {
+        setError("Invalid wallet address");
+      }
     };
-    getBank();
-  }, [setBank]);
+    if (walletAddress) {
+      getBank();
+    }
+  }, [walletAddress]);
 
   return (
     <Card height="h-portfolio" title={"Portfolio & Assets"}>
-      {bank}
+      {error || bank.map((c) => <p key={c}>{c}</p>)}
     </Card>
   );
 };
 
 export default PortfolioCard;
+
+interface Props {
+  walletAddress: string;
+}
