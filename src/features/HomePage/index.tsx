@@ -4,7 +4,7 @@ import PortfolioCard from "../PortfolioCard";
 import RecentActivityCard from "../RecentActivityCard";
 
 const HomePage = () => {
-  const { register, watch, getValues } = useForm();
+  const { register, watch } = useForm();
 
   const walletAddress = watch("walletAddress");
 
